@@ -322,6 +322,46 @@ uipro uninstall --ai claude # Remove specific platform
 uipro uninstall --global    # Remove from global install
 ```
 
+## Standalone Claude Skill ZIP
+
+This fork includes a portable custom-skill package for Claude.ai as well as the existing Claude Code/plugin setup. The packager takes the runtime files from `.claude/skills/ui-ux-pro-max/`, includes the local search databases and references, excludes test fixtures, and validates the archive structure. It shortens only the packaged ZIP's frontmatter description to Claude.ai's 200-character limit; the canonical Claude Code skill metadata in the repository remains in sync with the upstream templates.
+
+### Build the ZIP locally
+
+Requires Python 3.x; no third-party Python packages are needed.
+
+```bash
+python3 scripts/package-claude-skill.py
+```
+
+This creates `dist/ui-ux-pro-max-claude-skill.zip`. The archive has the required top-level folder `ui-ux-pro-max/` containing `SKILL.md`, `data/`, `references/`, `scripts/`, and the license. You can choose another destination with `--output /path/to/file.zip`.
+
+### Upload to Claude.ai
+
+1. Open **Customize → Skills** (the exact menu label may vary).
+2. Choose **Create skill → Upload a skill**.
+3. Upload `ui-ux-pro-max-claude-skill.zip`, then enable it.
+4. Try a UI task such as “Design a responsive SaaS dashboard” or “Review this form for keyboard accessibility.”
+
+Custom-skill upload availability depends on your Claude plan and workspace settings. Python 3.x is required for database-backed searches; the skill does not install Python or other software for you.
+
+### Use with Claude Code
+
+The usual installer remains the simplest route:
+
+```bash
+npm install -g ui-ux-pro-max-cli
+uipro init --ai claude
+```
+
+For a manual project-level install, extract the ZIP and copy the `ui-ux-pro-max/` folder to `.claude/skills/ui-ux-pro-max/`. For a personal install, copy it to `~/.claude/skills/ui-ux-pro-max/`. Keep the entire folder, not only `SKILL.md`, because the search script depends on the bundled data and helper modules.
+
+### Get a prebuilt ZIP from GitHub Actions
+
+After this change is merged into `main`, open **Actions → Package Claude Skill**, run the workflow, and download the `ui-ux-pro-max-claude-skill` artifact from the completed run. The workflow builds and validates the ZIP from the same script used locally.
+
+---
+
 ## Prerequisites
 
 Python 3.x is required for the search script (standard library only — the scripts install nothing and make no network calls).
