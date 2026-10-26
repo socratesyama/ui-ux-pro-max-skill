@@ -36,7 +36,7 @@ For the full rule list per category (all 119 UX guidelines with rationale), read
 
 ## Running the search tool
 
-The skill root is `\${CLAUDE_SKILL_DIR}` in Claude Code. Run the bundled search script by its full path so it works regardless of the project's current working directory:
+The skill root is `${CLAUDE_SKILL_DIR}` in Claude Code. Run the bundled search script by its full path so it works regardless of the project's current working directory:
 
 ```bash
 python "${CLAUDE_SKILL_DIR}/scripts/search.py" "<query>" --domain <domain>
@@ -44,12 +44,6 @@ python "${CLAUDE_SKILL_DIR}/scripts/search.py" "<query>" --domain <domain>
 
 For a ZIP-uploaded custom skill in Claude.ai, the shell may not expose `CLAUDE_SKILL_DIR`. In that environment, identify the installed directory that contains this skill's `SKILL.md` using the available filesystem tools, then substitute that absolute directory path in place of `${CLAUDE_SKILL_DIR}` in the commands below. Do not assume the project directory or the current working directory is the skill directory.
 
-
-The search script lives inside this skill's own directory, not the project directory. Always invoke it by its full path — do not assume a particular working directory:
-
-```bash
-python "${CLAUDE_SKILL_DIR}/scripts/search.py" "<query>" --domain <domain>
-```
 
 If `python` is not found, try `python3`, then `py -3`. Requires Python 3.x, no external dependencies (see README for install instructions if Python is missing).
 
