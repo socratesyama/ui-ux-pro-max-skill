@@ -324,7 +324,7 @@ uipro uninstall --global    # Remove from global install
 
 ## Standalone Claude Skill ZIP
 
-This fork includes a portable custom-skill package for Claude.ai as well as the existing Claude Code/plugin setup. The packager takes the runtime files from `.claude/skills/ui-ux-pro-max/`, includes the local search databases and references, excludes test fixtures, and validates that the archive contains the required entry point and files.
+This fork includes a portable custom-skill package for Claude.ai as well as the existing Claude Code/plugin setup. The packager takes the runtime files from `.claude/skills/ui-ux-pro-max/`, includes the local search databases and references, excludes test fixtures, and validates the archive structure. It shortens only the packaged ZIP's frontmatter description to Claude.ai's 200-character limit; the canonical Claude Code skill metadata in the repository remains in sync with the upstream templates.
 
 ### Build the ZIP locally
 
