@@ -1,0 +1,36 @@
+name: Package Claude Skill
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".claude/skills/ui-ux-pro-max/**"
+      - "scripts/package-claude-skill.py"
+      - "LICENSE"
+      - ".github/workflows/package-claude-skill.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build and validate Claude skill ZIP
+        run: |
+          python3 scripts/package-claude-skill.py \
+            --output "$RUNNER_TEMP/ui-ux-pro-max-claude-skill.zip"
+
+      - name: Upload installable skill package
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-ux-pro-max-claude-skill
+          path: ${{ runner.temp }}/ui-ux-pro-max-claude-skill.zip
+          if-no-files-found: error
+          retention-days: 30
